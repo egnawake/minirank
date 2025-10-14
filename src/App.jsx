@@ -1,22 +1,24 @@
-import { DndContext } from "@dnd-kit/core";
-import { useState } from "react";
 import "./App.css";
-import { TierItem } from "./TierItem";
-import { TierContainer } from "./TierContainer";
+import { SortableTierList } from "./SortableTierList";
 
 const initialTiers = [
   {
-    id: 0,
+    id: "t0",
+    name: "",
+    items: ["i0", "i1", "i2"],
+  },
+  {
+    id: "t1",
     name: "S",
     items: [],
   },
   {
-    id: 1,
+    id: "t2",
     name: "A",
     items: [],
   },
   {
-    id: 2,
+    id: "t3",
     name: "B",
     items: [],
   },
@@ -24,87 +26,27 @@ const initialTiers = [
 
 const items = [
   {
-    id: 0,
+    id: "i0",
     name: "Cat",
     image:
       "https://www.litter-robot.com/media/wysiwyg/blue_cream_himalayan_cat_color.jpeg",
   },
   {
-    id: 1,
+    id: "i1",
     name: "Another cat",
     image:
       "https://www.thesprucepets.com/thmb/cZCaN3uMPVX2SdL4lsn5xGnIGPM=/1112x1077/filters:no_upscale():max_bytes(150000):strip_icc()/AmericanShorthair-a379c1f6515945b286ad321df678b14b.jpg",
   },
+  {
+    id: "i2",
+    name: "One more cat",
+    image:
+      "https://www.boredpanda.com/blog/wp-content/uploads/2022/12/63987559eec1d_hw2bszj0cu3a1__700.jpg",
+  },
 ];
 
 function App() {
-  const [tiers, setTiers] = useState(initialTiers);
-
-  function handleDragEnd({ active, over }) {
-    if (over === null) {
-      return;
-    }
-
-    const tierInId = over.id;
-    const tierOutId = tiers.find((tier) => {
-      return tier.items.includes(active.id);
-    })?.id;
-
-    if (tierInId === tierOutId) {
-      return;
-    }
-
-    const newTiers = tiers.map((tier) => {
-      if (tier.id === tierInId) {
-        return {
-          ...tier,
-          items: [...tier.items, active.id],
-        };
-      }
-      if (tier.id === tierOutId) {
-        return {
-          ...tier,
-          items: tier.items.filter((itemId) => itemId !== active.id),
-        };
-      }
-      return tier;
-    });
-
-    console.log(newTiers);
-
-    setTiers(newTiers);
-  }
-
-  const unassignedItems = items.filter((item) => {
-    return !tiers.some((tier) => tier.items.includes(item.id));
-  });
-
-  return (
-    <>
-      <DndContext onDragEnd={handleDragEnd}>
-        {unassignedItems.map((item) => (
-          <TierItem
-            key={item.id}
-            id={item.id}
-            name={item.name}
-            image={item.image}
-          />
-        ))}
-        {tiers.map((tier) => {
-          return (
-            <TierContainer
-              key={tier.id}
-              id={tier.id}
-              name={tier.name}
-              items={tier.items.map((itemId) =>
-                items.find((item) => item.id === itemId),
-              )}
-            />
-          );
-        })}
-      </DndContext>
-    </>
-  );
+  return <SortableTierList items={items} tiers={initialTiers} />;
 }
 
 export default App;
