@@ -7,6 +7,7 @@ export function Droppable({ id, children }) {
     height: "85px",
     border: "1px solid white",
     borderColor: isOver ? "white" : "#cccccc",
+    marginBlock: "20px",
   };
 
   return (

@@ -39,6 +39,83 @@ export function SortableTierList(props) {
     );
   }
 
+  function handleDragOver(e) {
+    const { active, over } = e;
+
+    if (active.id === over.id) {
+      return;
+    }
+
+    const activeTier = tiers.find(tier => tier.items.includes(active.id));
+
+    const containerId = over.id.startsWith("t")
+      ? over.id
+      : null;
+
+    if (containerId === activeTier.id) {
+      return;
+    }
+
+    if (containerId !== null) {
+      const newTiers = tiers.map((tier) => {
+        // Remove item from its current tier
+        if (tier.id === activeTier.id) {
+          return {
+            ...tier,
+            items: tier.items.filter(id => id !== active.id),
+          };
+        }
+        // Add item to new tier
+        if (tier.id === containerId) {
+          return {
+            ...tier,
+            items: [...tier.items, active.id],
+          };
+        }
+        return tier;
+      });
+
+      setTiers(newTiers);
+      return;
+    }
+
+    const overTier = tiers.find((tier) => tier.items.includes(over.id));
+
+    if (activeTier.id === overTier.id) {
+      const newTiers = tiers.map((tier) => {
+        if (tier.id === activeTier.id) {
+          const oldIndex = tier.items.indexOf(active.id);
+          const newIndex = tier.items.indexOf(over.id);
+          return {
+            ...tier,
+            items: arrayMove(tier.items, oldIndex, newIndex),
+          };
+        }
+        return tier;
+      });
+      setTiers(newTiers);
+      return;
+    }
+
+    const newTiers = tiers.map((tier) => {
+      if (tier.id === activeTier.id) {
+        return {
+          ...tier,
+          items: tier.items.filter(id => id !== active.id),
+        };
+      }
+      if (tier.id === overTier.id) {
+        const overIndex = overTier.items.indexOf(over.id);
+        return {
+          ...tier,
+          items: [...tier.items.slice(0, overIndex), active.id, ...tier.items.slice(overIndex)],
+        };
+      }
+      return tier;
+    });
+    setTiers(newTiers);
+  }
+
   function handleDragEnd(e) {
     const { active, over } = e;
 
@@ -121,7 +198,7 @@ export function SortableTierList(props) {
       <DndContext
         sensors={sensors}
         collisionDetection={closestCorners}
-        onDragEnd={handleDragEnd}
+        onDragOver={handleDragOver}
       >
         {tiers.map(tier => (
           <SortableContext items={tier.items} strategy={horizontalListSortingStrategy} key={tier.id}>
