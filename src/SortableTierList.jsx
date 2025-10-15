@@ -10,6 +10,10 @@ import {
 } from "@dnd-kit/core";
 
 import {
+  DragDropProvider
+} from "@dnd-kit/react";
+
+import {
   SortableContext,
   horizontalListSortingStrategy,
   sortableKeyboardCoordinates,
@@ -20,7 +24,7 @@ import { Droppable } from "./Droppable";
 import { Sortable } from "./Sortable";
 
 export function SortableTierList(props) {
-  const [tiers, setTiers] = useState(props.tiers);
+  const [tiers, setTiers] = useState(makeTierListMap(props.tiers));
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -29,18 +33,19 @@ export function SortableTierList(props) {
     }),
   );
 
-  function tierItem(id) {
+  function tierItem(id, index, group) {
     const item = props.items.find((el) => el.id === id);
 
     return (
-      <Sortable id={id} key={id}>
+      <Sortable key={id} id={id} index={index} group={group}>
         <img src={item.image} alt={item.name} height={50} width={50} />
       </Sortable>
     );
   }
 
-  function handleDragOver(e) {
-    const { active, over } = e;
+  function handleDragOver({ event, manager }) {
+    const { operation } = event;
+    const { source: active, target: over } = operation;
 
     if (active.id === over.id) {
       return;
@@ -195,19 +200,20 @@ export function SortableTierList(props) {
 
   return (
     <div>
-      <DndContext
-        sensors={sensors}
-        collisionDetection={closestCorners}
-        onDragOver={handleDragOver}
-      >
-        {tiers.map(tier => (
-          <SortableContext items={tier.items} strategy={horizontalListSortingStrategy} key={tier.id}>
-            <Droppable id={tier.id}>
-              {tier.items.map((id) => tierItem(id))}
-            </Droppable>
-          </SortableContext>
-        ))}
-      </DndContext>
+      {Object.values(tiers).map((tier) => (
+        <div key={tier.id} id={tier.id} style={{ height: "100px", border: "1px solid white" }}>
+          {tier.items.map((id, index) => tierItem(id, index, tier.id))}
+        </div>
+      ))}
     </div>
   );
+}
+
+function makeTierListMap(tierList) {
+  return tierList.reduce((acc, cur) => {
+    return {
+      ...acc,
+      [cur.id]: cur,
+    };
+  }, {});
 }

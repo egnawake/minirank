@@ -5,7 +5,7 @@ const initialTiers = [
   {
     id: "t0",
     name: "",
-    items: ["i0", "i1", "i2"],
+    items: ["i0", "i2"],
   },
   {
     id: "t1",
@@ -15,7 +15,7 @@ const initialTiers = [
   {
     id: "t2",
     name: "A",
-    items: [],
+    items: ["i1"],
   },
   {
     id: "t3",

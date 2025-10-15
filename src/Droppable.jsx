@@ -1,17 +1,17 @@
-import { useDroppable } from "@dnd-kit/core";
+import { useDroppable } from "@dnd-kit/react";
 
 export function Droppable({ id, children }) {
-  const { isOver, setNodeRef } = useDroppable({ id });
+  const { ref, isDropTarget } = useDroppable({ id });
   const style = {
     width: "80vw",
     height: "85px",
     border: "1px solid white",
-    borderColor: isOver ? "white" : "#cccccc",
+    borderColor: isDropTarget ? "white" : "#cccccc",
     marginBlock: "20px",
   };
 
   return (
-    <div ref={setNodeRef} style={style}>
+    <div ref={ref} style={style}>
       {children}
     </div>
   );

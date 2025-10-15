@@ -1,16 +1,10 @@
-import { useDraggable } from "@dnd-kit/core";
-import { CSS } from "@dnd-kit/utilities";
+import { useDraggable } from "@dnd-kit/react";
 
 export function Draggable({ id, children }) {
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({
-    id,
-  });
-  const style = {
-    transform: CSS.Translate.toString(transform),
-  };
+  const { ref, isDragging } = useDraggable({ id });
 
   return (
-    <button ref={setNodeRef} style={style} {...listeners} {...attributes}>
+    <button ref={ref} className={isDragging ? "dragging" : ""}>
       {children}
     </button>
   );
