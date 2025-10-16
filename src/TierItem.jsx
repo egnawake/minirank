@@ -1,9 +1,22 @@
-import { Sortable } from "./Sortable";
+import { useSortable } from "@dnd-kit/react/sortable";
 
 export function TierItem({ id, index, group, name, image }) {
+  const { ref } = useSortable({
+    id,
+    index,
+    type: "tier-item",
+    accept: "tier-item",
+    group,
+  });
+
   return (
-    <Sortable id={id} index={index} group={group}>
-      <img src={image} alt={name} width={80} height={80} />
-    </Sortable>
+    <img
+      ref={ref}
+      src={image}
+      alt={name}
+      width={50}
+      height={50}
+      className="tier-item"
+    />
   );
 }

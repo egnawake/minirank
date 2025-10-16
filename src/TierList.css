@@ -1,0 +1,18 @@
+.tier {
+  border: 1px solid #888888;
+}
+.tier-container {
+  width: 90vw;
+  max-width: 800px;
+  border: 1px solid #dddddd;
+  height: 68px;
+  margin: 2px;
+  padding: 8px;
+}
+.tier-container.unassigned {
+  position: absolute;
+  bottom: 20px;
+}
+
+.tier-item {
+}
