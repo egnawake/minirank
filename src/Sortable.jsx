@@ -9,9 +9,5 @@ export function Sortable({ id, index, group, children }) {
     group,
   });
 
-  return (
-    <button ref={ref}>
-      {children}
-    </button>
-  );
+  return <button ref={ref}>{children}</button>;
 }

@@ -1,9 +1,9 @@
-import { Draggable } from "./Draggable";
+import { Sortable } from "./Sortable";
 
-export function TierItem({ id, name, image }) {
+export function TierItem({ id, index, group, name, image }) {
   return (
-    <Draggable id={id}>
+    <Sortable id={id} index={index} group={group}>
       <img src={image} alt={name} width={80} height={80} />
-    </Draggable>
+    </Sortable>
   );
 }
