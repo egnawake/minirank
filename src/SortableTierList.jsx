@@ -7,11 +7,24 @@ import "./TierList.css";
 export function SortableTierList(props) {
   const [initialTierList, initialTierInfo] = makeTierListMaps(props.tiers);
   const [tiers, setTiers] = useState(initialTierList);
+  const [tierInfo, setTierInfo] = useState(initialTierInfo);
   const unassigned = tiers["t0"];
   const assigned = Object.entries(tiers).filter(([id, _]) => true);
   const unassignedItems = unassigned.map((itemId) => {
     return props.items.find((item) => item.id === itemId);
   });
+
+  function onNameChanged(id, name) {
+    const newTierInfo = {
+      ...tierInfo,
+      [id]: {
+        ...tierInfo[id],
+        name: name,
+      },
+    };
+
+    setTierInfo(newTierInfo);
+  }
 
   return (
     <DragDropProvider
@@ -28,8 +41,11 @@ export function SortableTierList(props) {
             <TierContainer
               key={tierId}
               id={tierId}
-              name={initialTierInfo[tierId].name}
+              name={tierInfo[tierId].name}
               items={items}
+              nameChanged={(name) => {
+                onNameChanged(tierId, name);
+              }}
             />
           ) : null;
         })}
