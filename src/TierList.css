@@ -3,16 +3,37 @@
 }
 .tier-container {
   width: 90vw;
-  max-width: 800px;
-  border: 1px solid #dddddd;
+  max-width: 100%;
+  border: 1px solid green;
   height: 68px;
-  margin: 2px;
   padding: 8px;
-}
-.tier-container.unassigned {
-  position: absolute;
-  bottom: 20px;
 }
 
 .tier-item {
+}
+
+.bottom-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  position: absolute;
+  bottom: 20px;
+  width: 90vw;
+  border: 1px solid darkred;
+}
+.bottom-bar .tier {
+  flex: 1 0 0;
+  max-width: 100%;
+}
+.bottom-bar .tier-container {
+  width: 100%;
+}
+
+.add-item-button {
+  height: 50px;
+  flex: 0 0 50px;
+}
+
+.image-url-input {
+  flex: 0 0 100%;
 }

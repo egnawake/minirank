@@ -15,7 +15,7 @@ export function TierContainer({ id, name, items, unassigned, nameChanged }) {
   }
 
   return (
-    <div>
+    <div className="tier">
       {!unassigned ? (
         <input type="text" value={name} onChange={onNameChange} />
       ) : null}
