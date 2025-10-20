@@ -70,6 +70,11 @@ export function SortableTierList(props) {
   }
 
   function handleTierRemove(id) {
+    // Keep at least 1 tier (plus 1 - the unassigned tier)
+    if (Object.keys(tiers).length <= 2) {
+      return;
+    }
+
     const itemsInTier = tiers[id];
 
     const newTiers = {};
