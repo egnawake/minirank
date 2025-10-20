@@ -35,6 +35,10 @@ export function SortableTierList(props) {
       return;
     }
 
+    if (items.find((item) => item.id === imageUrl) !== undefined) {
+      return;
+    }
+
     const newItem = {
       id: imageUrl,
       name: "",
