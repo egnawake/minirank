@@ -31,6 +31,10 @@ export function SortableTierList(props) {
   }
 
   function handleAddItemClick() {
+    if (imageUrl === "") {
+      return;
+    }
+
     const newItem = {
       id: imageUrl,
       name: "",
