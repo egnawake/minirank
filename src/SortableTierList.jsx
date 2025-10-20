@@ -10,6 +10,7 @@ export function SortableTierList(props) {
   const [items, setItems] = useState(props.items);
   const [tierInfo, setTierInfo] = useState(initialTierInfo);
   const [imageUrl, setImageUrl] = useState("");
+  const [tierIdIncrement, setTierIdIncrement] = useState(props.tiers.length);
 
   const unassigned = tiers["t0"];
   const assigned = Object.entries(tiers).filter(([id, _]) => true);
@@ -44,6 +45,38 @@ export function SortableTierList(props) {
     setTiers(newTiers);
   }
 
+  function handleAddTierClick() {
+    const newId = `t${tierIdIncrement}`;
+    const newTiers = {
+      ...tiers,
+      [newId]: [],
+    };
+    setTiers(newTiers);
+
+    const newTierInfo = {
+      ...tierInfo,
+      [newId]: {
+        id: newId,
+        name: "",
+      },
+    };
+    setTierInfo(newTierInfo);
+
+    setTierIdIncrement(tierIdIncrement + 1);
+  }
+
+  function handleTierRemove(id) {
+    const itemsInTier = tiers[id];
+
+    const newTiers = {};
+    const keys = Object.keys(tiers).filter((key) => key !== id);
+    for (const k of keys) {
+      newTiers[k] = tiers[k];
+    }
+    newTiers["t0"] = [...tiers["t0"], ...itemsInTier];
+    setTiers(newTiers);
+  }
+
   return (
     <DragDropProvider
       onDragOver={(event) => {
@@ -64,9 +97,13 @@ export function SortableTierList(props) {
               nameChanged={(name) => {
                 onNameChanged(tierId, name);
               }}
+              onRemove={() => {
+                handleTierRemove(tierId);
+              }}
             />
           ) : null;
         })}
+        <button type="button" onClick={handleAddTierClick}>Add tier</button>
         <div className="bottom-bar">
           <input type="text" value={imageUrl} onChange={(e) => {
             setImageUrl(e.target.value);
