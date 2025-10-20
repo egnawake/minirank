@@ -96,7 +96,7 @@ export function SortableTierList(props) {
         setTiers((tiers) => move(tiers, event));
       }}
     >
-      <div>
+      <div className="tier-list">
         {assigned.map(([tierId, tier]) => {
           const assignedItems = tier.map((itemId) => {
             return items.find((item) => item.id === itemId);
@@ -116,18 +116,33 @@ export function SortableTierList(props) {
             />
           ) : null;
         })}
-        <button type="button" onClick={handleAddTierClick}>Add tier</button>
+        <button type="button" onClick={handleAddTierClick}>
+          Add tier
+        </button>
         <div className="bottom-bar">
-          <input type="text" value={imageUrl} onChange={(e) => {
-            setImageUrl(e.target.value);
-          }} className="image-url-input" />
-          <button type="button" onClick={handleAddItemClick} className="add-item-button">Add</button>
-          <TierContainer
-            id={"t0"}
-            name={initialTierInfo["t0"].name}
-            items={unassignedItems}
-            unassigned
+          <input
+            type="text"
+            value={imageUrl}
+            onChange={(e) => {
+              setImageUrl(e.target.value);
+            }}
+            className="image-url-input"
           />
+          <div className="unassigned-tier-wrapper">
+            <button
+              type="button"
+              onClick={handleAddItemClick}
+              className="add-item-button"
+            >
+              Add
+            </button>
+            <TierContainer
+              id={"t0"}
+              name={initialTierInfo["t0"].name}
+              items={unassignedItems}
+              unassigned
+            />
+          </div>
         </div>
       </div>
     </DragDropProvider>

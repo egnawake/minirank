@@ -2,7 +2,14 @@ import { useDroppable } from "@dnd-kit/react";
 import { CollisionPriority } from "@dnd-kit/abstract";
 import { TierItem } from "./TierItem";
 
-export function TierContainer({ id, name, items, unassigned, nameChanged, onRemove }) {
+export function TierContainer({
+  id,
+  name,
+  items,
+  unassigned,
+  nameChanged,
+  onRemove,
+}) {
   const { ref } = useDroppable({
     id,
     type: "tier-container",
@@ -23,7 +30,9 @@ export function TierContainer({ id, name, items, unassigned, nameChanged, onRemo
       {!unassigned ? (
         <div>
           <input type="text" value={name} onChange={onNameChange} />
-          <button type="button" onClick={handleRemoveClick}>Remove</button>
+          <button type="button" onClick={handleRemoveClick}>
+            Remove
+          </button>
         </div>
       ) : null}
       <div

@@ -1,39 +1,40 @@
+.tier-list {
+  width: 90vw;
+  max-width: 600px;
+}
 .tier {
   border: 1px solid #888888;
 }
 .tier-container {
-  width: 90vw;
-  max-width: 100%;
+  display: flex;
   border: 1px solid green;
   height: 68px;
   padding: 8px;
+  overflow: scroll;
 }
 
 .tier-item {
+  border: 1px solid aqua;
 }
 
 .bottom-bar {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  position: absolute;
+  position: fixed;
   bottom: 20px;
-  width: 90vw;
   border: 1px solid darkred;
+  width: 90vw;
+  max-width: 600px;
+}
+.unassigned-tier-wrapper {
+  display: flex;
+  width: 100%;
 }
 .bottom-bar .tier {
   flex: 1 0 0;
-  max-width: 100%;
+  overflow: hidden;
 }
 .bottom-bar .tier-container {
-  width: 100%;
 }
 
 .add-item-button {
-  height: 50px;
   flex: 0 0 50px;
-}
-
-.image-url-input {
-  flex: 0 0 100%;
 }

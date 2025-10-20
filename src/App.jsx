@@ -1,29 +1,6 @@
 import "./App.css";
 import { SortableTierList } from "./SortableTierList";
 
-const initialTiers = [
-  {
-    id: "t0",
-    name: "",
-    items: ["i0", "i2"],
-  },
-  {
-    id: "t1",
-    name: "S",
-    items: [],
-  },
-  {
-    id: "t2",
-    name: "A",
-    items: ["i1"],
-  },
-  {
-    id: "t3",
-    name: "B",
-    items: [],
-  },
-];
-
 const items = [
   {
     id: "i0",
@@ -42,6 +19,53 @@ const items = [
     name: "One more cat",
     image:
       "https://www.boredpanda.com/blog/wp-content/uploads/2022/12/63987559eec1d_hw2bszj0cu3a1__700.jpg",
+  },
+  {
+    id: "https://purrfect-cattery.co.uk/wp-content/uploads/2022/02/pixabay_ben-kerckx_cat-300572_1920.jpg",
+    name: "One more cat",
+    image:
+      "https://purrfect-cattery.co.uk/wp-content/uploads/2022/02/pixabay_ben-kerckx_cat-300572_1920.jpg",
+  },
+  {
+    id: "http://upload.wikimedia.org/wikipedia/commons/d/d4/Cat_March_2010-1a.jpg",
+    name: "One more cat",
+    image:
+      "http://upload.wikimedia.org/wikipedia/commons/d/d4/Cat_March_2010-1a.jpg",
+  },
+  {
+    id: "https://hips.hearstapps.com/hmg-prod/images/close-up-of-cat-sitting-on-wood-turkish-angora-cat-royalty-free-image-1658453231.jpg?crop=0.738xw:0.738xh;0.119xw",
+    name: "One more cat",
+    image:
+      "https://hips.hearstapps.com/hmg-prod/images/close-up-of-cat-sitting-on-wood-turkish-angora-cat-royalty-free-image-1658453231.jpg?crop=0.738xw:0.738xh;0.119xw",
+  },
+  {
+    id: "https://www.momtastic.com/wp-content/uploads/sites/5/2013/12/Cat.jpg",
+    name: "One more cat",
+    image:
+      "https://www.momtastic.com/wp-content/uploads/sites/5/2013/12/Cat.jpg",
+  },
+];
+
+const initialTiers = [
+  {
+    id: "t0",
+    name: "",
+    items: items.map((item) => item.id),
+  },
+  {
+    id: "t1",
+    name: "S",
+    items: [],
+  },
+  {
+    id: "t2",
+    name: "A",
+    items: [],
+  },
+  {
+    id: "t3",
+    name: "B",
+    items: [],
   },
 ];
 
