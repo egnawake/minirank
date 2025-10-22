@@ -103,6 +103,10 @@ export function SortableTierList(props) {
     });
   }
 
+  function handleShareClick() {
+    console.log("Not implemented yet");
+  }
+
   return (
     <DragDropProvider
       onDragOver={(event) => {
@@ -132,6 +136,7 @@ export function SortableTierList(props) {
         <button type="button" onClick={handleAddTierClick}>
           Add tier
         </button>
+        <button type="button" onClick={handleShareClick}>Share</button>
         <div className="bottom-bar">
           <input
             type="text"
