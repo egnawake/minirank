@@ -11,6 +11,7 @@ export function SortableTierList(props) {
   const [tierInfo, setTierInfo] = useState(initialTierInfo);
   const [imageUrl, setImageUrl] = useState("");
   const [tierIdIncrement, setTierIdIncrement] = useState(props.tiers.length);
+  const [removeMode, setRemoveMode] = useState(false);
 
   const unassigned = tiers["t0"];
   const assigned = Object.entries(tiers).filter(([id, _]) => true);
@@ -90,6 +91,18 @@ export function SortableTierList(props) {
     setTiers(newTiers);
   }
 
+  function handleRemoveItemsClick() {
+    setRemoveMode(!removeMode);
+  }
+
+  function handleItemRemove(id) {
+    setItems(items.filter((item) => item.id !== id));
+    setTiers({
+      ...tiers,
+      ["t0"]: tiers["t0"].filter((itemId) => itemId !== id),
+    });
+  }
+
   return (
     <DragDropProvider
       onDragOver={(event) => {
@@ -136,11 +149,20 @@ export function SortableTierList(props) {
             >
               Add
             </button>
+            <button
+              type="button"
+              onClick={handleRemoveItemsClick}
+              className="add-item-button"
+            >
+              {!removeMode ? "Remove mode" : "End remove mode"}
+            </button>
             <TierContainer
               id={"t0"}
               name={initialTierInfo["t0"].name}
               items={unassignedItems}
               unassigned
+              removeMode={removeMode}
+              onItemRemove={handleItemRemove}
             />
           </div>
         </div>

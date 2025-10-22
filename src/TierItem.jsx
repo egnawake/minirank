@@ -1,6 +1,14 @@
 import { useSortable } from "@dnd-kit/react/sortable";
 
-export function TierItem({ id, index, group, name, image }) {
+export function TierItem({
+  id,
+  index,
+  group,
+  name,
+  image,
+  removeMode,
+  onRemove,
+}) {
   const { ref } = useSortable({
     id,
     index,
@@ -8,6 +16,12 @@ export function TierItem({ id, index, group, name, image }) {
     accept: "tier-item",
     group,
   });
+
+  function handleItemClick() {
+    if (removeMode) {
+      onRemove(id);
+    }
+  }
 
   return (
     <img
@@ -17,6 +31,7 @@ export function TierItem({ id, index, group, name, image }) {
       width={50}
       height={50}
       className="tier-item"
+      onClick={handleItemClick}
     />
   );
 }

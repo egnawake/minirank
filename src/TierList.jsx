@@ -38,8 +38,6 @@ export function TierList(props) {
       return tier;
     });
 
-    console.log(newTiers);
-
     setTiers(newTiers);
   }
 

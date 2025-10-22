@@ -7,8 +7,10 @@ export function TierContainer({
   name,
   items,
   unassigned,
+  removeMode,
   nameChanged,
   onRemove,
+  onItemRemove,
 }) {
   const { ref } = useDroppable({
     id,
@@ -47,6 +49,8 @@ export function TierContainer({
             group={id}
             name={item.name}
             image={item.image}
+            removeMode={removeMode}
+            onRemove={onItemRemove}
           />
         ))}
       </div>
