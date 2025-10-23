@@ -30,7 +30,7 @@ export function TierContainer({
   return (
     <div className="tier">
       {!unassigned ? (
-        <div>
+        <div className="tier-title">
           <input type="text" value={name} onChange={onNameChange} />
           <button type="button" onClick={handleRemoveClick}>
             Remove

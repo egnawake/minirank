@@ -114,53 +114,36 @@ export function SortableTierList(props) {
       }}
     >
       <div className="tier-list">
-        {assigned.map(([tierId, tier]) => {
-          const assignedItems = tier.map((itemId) => {
-            return items.find((item) => item.id === itemId);
-          });
-          return tierId !== "t0" ? (
-            <TierContainer
-              key={tierId}
-              id={tierId}
-              name={tierInfo[tierId].name}
-              items={assignedItems}
-              nameChanged={(name) => {
-                onNameChanged(tierId, name);
-              }}
-              onRemove={() => {
-                handleTierRemove(tierId);
-              }}
-            />
-          ) : null;
-        })}
-        <button type="button" onClick={handleAddTierClick}>
-          Add tier
-        </button>
-        <button type="button" onClick={handleShareClick}>Share</button>
+        <div className="named-tiers">
+          {assigned.map(([tierId, tier]) => {
+            const assignedItems = tier.map((itemId) => {
+              return items.find((item) => item.id === itemId);
+            });
+            return tierId !== "t0" ? (
+              <TierContainer
+                key={tierId}
+                id={tierId}
+                name={tierInfo[tierId].name}
+                items={assignedItems}
+                nameChanged={(name) => {
+                  onNameChanged(tierId, name);
+                }}
+                onRemove={() => {
+                  handleTierRemove(tierId);
+                }}
+              />
+            ) : null;
+          })}
+          <button
+            type="button"
+            onClick={handleAddTierClick}
+            className="add-tier-button"
+          >
+            Add tier
+          </button>
+        </div>
         <div className="bottom-bar">
-          <input
-            type="text"
-            value={imageUrl}
-            onChange={(e) => {
-              setImageUrl(e.target.value);
-            }}
-            className="image-url-input"
-          />
           <div className="unassigned-tier-wrapper">
-            <button
-              type="button"
-              onClick={handleAddItemClick}
-              className="add-item-button"
-            >
-              Add
-            </button>
-            <button
-              type="button"
-              onClick={handleRemoveItemsClick}
-              className="add-item-button"
-            >
-              {!removeMode ? "Remove mode" : "End remove mode"}
-            </button>
             <TierContainer
               id={"t0"}
               name={initialTierInfo["t0"].name}
@@ -169,6 +152,37 @@ export function SortableTierList(props) {
               removeMode={removeMode}
               onItemRemove={handleItemRemove}
             />
+          </div>
+          <div className="actions">
+            <div className="row">
+              <input
+                type="text"
+                value={imageUrl}
+                onChange={(e) => {
+                  setImageUrl(e.target.value);
+                }}
+                className="image-url-input"
+              />
+              <button
+                type="button"
+                onClick={handleAddItemClick}
+                className="add-item-button"
+              >
+                Add
+              </button>
+            </div>
+            <div className="row">
+              <button type="button" onClick={handleShareClick}>
+                Share
+              </button>
+              <button
+                type="button"
+                onClick={handleRemoveItemsClick}
+                className="add-item-button"
+              >
+                {!removeMode ? "Remove mode" : "End remove mode"}
+              </button>
+            </div>
           </div>
         </div>
       </div>
