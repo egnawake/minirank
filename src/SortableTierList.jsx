@@ -2,6 +2,7 @@ import { useState } from "react";
 import { DragDropProvider } from "@dnd-kit/react";
 import { move } from "@dnd-kit/helpers";
 import { TierContainer } from "./TierContainer";
+import { NewItemDialog } from "./NewItemDialog";
 import "./TierList.css";
 
 export function SortableTierList(props) {
@@ -9,7 +10,6 @@ export function SortableTierList(props) {
   const [tiers, setTiers] = useState(initialTierList);
   const [items, setItems] = useState(props.items);
   const [tierInfo, setTierInfo] = useState(initialTierInfo);
-  const [imageUrl, setImageUrl] = useState("");
   const [tierIdIncrement, setTierIdIncrement] = useState(props.tiers.length);
   const [removeMode, setRemoveMode] = useState(false);
 
@@ -31,7 +31,7 @@ export function SortableTierList(props) {
     setTierInfo(newTierInfo);
   }
 
-  function handleAddItemClick() {
+  function handleNewItemSubmit(imageUrl) {
     if (imageUrl === "") {
       return;
     }
@@ -155,32 +155,16 @@ export function SortableTierList(props) {
           </div>
           <div className="actions">
             <div className="row">
-              <input
-                type="text"
-                value={imageUrl}
-                onChange={(e) => {
-                  setImageUrl(e.target.value);
-                }}
-                className="image-url-input"
-              />
-              <button
-                type="button"
-                onClick={handleAddItemClick}
-                className="add-item-button"
-              >
-                Add
-              </button>
-            </div>
-            <div className="row">
-              <button type="button" onClick={handleShareClick}>
-                Share
-              </button>
+              <NewItemDialog onConfirm={handleNewItemSubmit} />
               <button
                 type="button"
                 onClick={handleRemoveItemsClick}
                 className="add-item-button"
               >
                 {!removeMode ? "Remove mode" : "End remove mode"}
+              </button>
+              <button type="button" onClick={handleShareClick}>
+                Share
               </button>
             </div>
           </div>
