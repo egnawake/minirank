@@ -134,38 +134,42 @@ export function SortableTierList(props) {
               />
             ) : null;
           })}
-          <button
-            type="button"
-            onClick={handleAddTierClick}
-            className="add-tier-button"
-          >
-            Add tier
-          </button>
+          <div className="add-tier-button-container">
+            <button
+              type="button"
+              onClick={handleAddTierClick}
+              className="add-tier-button"
+            >
+              Add tier
+            </button>
+          </div>
         </div>
         <div className="bottom-bar">
-          <div className="unassigned-tier-wrapper">
-            <TierContainer
-              id={"t0"}
-              name={initialTierInfo["t0"].name}
-              items={unassignedItems}
-              unassigned
-              removeMode={removeMode}
-              onItemRemove={handleItemRemove}
-            />
-          </div>
-          <div className="actions">
-            <div className="row">
-              <NewItemDialog onConfirm={handleNewItemSubmit} />
-              <button
-                type="button"
-                onClick={handleRemoveItemsClick}
-                className="add-item-button"
-              >
-                {!removeMode ? "Remove mode" : "End remove mode"}
-              </button>
-              <button type="button" onClick={handleShareClick}>
-                Share
-              </button>
+          <div className="bottom-bar-limiter">
+            <div className="unassigned-tier-wrapper">
+              <TierContainer
+                id={"t0"}
+                name={initialTierInfo["t0"].name}
+                items={unassignedItems}
+                unassigned
+                removeMode={removeMode}
+                onItemRemove={handleItemRemove}
+              />
+            </div>
+            <div className="actions">
+              <div className="row">
+                <NewItemDialog onConfirm={handleNewItemSubmit} />
+                <button
+                  type="button"
+                  onClick={handleRemoveItemsClick}
+                  className="add-item-button"
+                >
+                  {!removeMode ? "Remove mode" : "End remove mode"}
+                </button>
+                <button type="button" onClick={handleShareClick}>
+                  Share
+                </button>
+              </div>
             </div>
           </div>
         </div>

@@ -24,12 +24,17 @@ export function NewItemDialog({ onConfirm }) {
 
       <dialog ref={dialogRef}>
         <form method="dialog" onSubmit={handleSubmit}>
-          <label htmlFor="imageurl">Image URL</label>
-          <input type="text" name="imageurl" id="imageurl" />
-          <button>Add</button>
-          <button type="button" onClick={handleCancelClick}>
-            Cancel
-          </button>
+          <div className="dialog-title">New item</div>
+          <div className="dialog-content">
+            <label htmlFor="imageurl">Image URL</label>
+            <input type="text" name="imageurl" id="imageurl" />
+          </div>
+          <div className="dialog-actions">
+            <button>Add</button>
+            <button type="button" onClick={handleCancelClick}>
+              Cancel
+            </button>
+          </div>
         </form>
       </dialog>
     </>

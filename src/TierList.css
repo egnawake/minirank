@@ -1,6 +1,14 @@
 input {
-  border: none;
-  background: darkgreen;
+  border: 2px solid #101010;
+  background: #101010;
+  padding: 6px;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+input:focus {
+  outline: none;
+  border-bottom-color: #909090;
 }
 
 button {
@@ -8,8 +16,11 @@ button {
   height: 40px;
   overflow: hidden;
   flex: 0 0 auto;
-  background: darkblue;
-  border: 1px solid blue;
+  background: #303030;
+  border: none;
+  border-bottom: 1px solid #303030;
+  border-radius: 6px;
+  cursor: pointer;
 }
 
 .tier-list {
@@ -17,12 +28,46 @@ button {
   max-width: 600px;
 }
 
+dialog {
+  border: none;
+  border-radius: 8px;
+  background: #202020;
+}
+
+dialog::backdrop {
+  background-color: #00000090;
+}
+
+.dialog-title {
+  color: #686868;
+  margin-block-end: 14px;
+}
+
+.dialog-content {
+  margin-block-end: 18px;
+}
+
+.dialog-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.dialog-actions * {
+  flex: 1;
+}
+
+label {
+  display: block;
+  font-size: 13px;
+  margin-block-end: 4px;
+}
+
 .named-tiers {
   padding-block-end: 200px;
 }
 
 .tier {
-  margin-block-end: 10px;
+  margin: 10px;
 }
 
 .tier-title {
@@ -32,36 +77,55 @@ button {
 .tier-title input {
   flex: 1 0 auto;
   font-size: 1.1rem;
+  border-radius: 6px 0 0 0;
+}
+
+.tier-title button {
+  border-radius: 0 6px 0 0;
 }
 
 .tier-container {
-  height: 68px;
-  padding: 8px;
+  height: 58px;
+  padding: 4px;
   display: flex;
   gap: 4px;
   align-items: center;
   overflow: scroll;
-  background: #000000;
+  background: #161616;
+  border-radius: 0 0 6px 6px;
 }
 
 .tier-item {
-  border: 1px solid aqua;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .bottom-bar {
   position: fixed;
-  background: #000000;
+  background: #161616;
   bottom: 0;
+  left: 0;
   width: 100vw;
+}
+.bottom-bar-limiter {
   max-width: 600px;
+  margin: 0 auto;
 }
 .bottom-bar .actions {
 }
 .bottom-bar .actions .row {
   display: flex;
+  background: #666;
+  gap: 1px;
 }
 .bottom-bar .actions .row * {
   flex: 1;
+}
+.bottom-bar .actions .row > button {
+  border-radius: 0;
+}
+.bottom-bar button:first-child {
+  border-inline-start: none;
 }
 .unassigned-tier-wrapper {
   display: flex;
@@ -75,6 +139,9 @@ button {
 .bottom-bar .tier-container {
 }
 
+.add-tier-button-container {
+  margin: 10px;
+}
 .add-tier-button {
   width: 100%;
   display: block;
