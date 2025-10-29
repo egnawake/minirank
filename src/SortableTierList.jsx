@@ -12,7 +12,7 @@ export function SortableTierList(props) {
   const [items, setItems] = useState(props.items);
 
   // TODO: make tierIdIncrement a ref
-  const [tierIdIncrement, setTierIdIncrement] = useState(props.tiers.length);
+  const [tierIdIncrement, setTierIdIncrement] = useState(props.tiers.order.length);
 
   const [removeMode, setRemoveMode] = useState(false);
 
