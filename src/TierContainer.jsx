@@ -43,8 +43,8 @@ export function TierContainer({
       >
         {items.map((item, index) => (
           <TierItem
-            key={item.id}
-            id={item.id}
+            key={item.image}
+            id={item.image}
             index={index}
             group={id}
             name={item.name}

@@ -6,29 +6,31 @@ import { NewItemDialog } from "./NewItemDialog";
 import "./TierList.css";
 
 export function SortableTierList(props) {
-  const [initialTierList, initialTierInfo] = makeTierListMaps(props.tiers);
-  const [tiers, setTiers] = useState(initialTierList);
+  const [tiers, setTiers] = useState(props.tiers);
   const [items, setItems] = useState(props.items);
-  const [tierInfo, setTierInfo] = useState(initialTierInfo);
+
+  // TODO: make tierIdIncrement a ref
   const [tierIdIncrement, setTierIdIncrement] = useState(props.tiers.length);
+
   const [removeMode, setRemoveMode] = useState(false);
 
-  const unassigned = tiers["t0"];
-  const assigned = Object.entries(tiers).filter(([id, _]) => true);
+  const unassigned = tiers.itemPlacement["t0"];
   const unassignedItems = unassigned.map((itemId) => {
-    return items.find((item) => item.id === itemId);
+    return items.find((item) => item.image === itemId);
   });
 
+  const assigned = tiers.order.filter((id) => id !== "t0");
+
   function onNameChanged(id, name) {
-    const newTierInfo = {
-      ...tierInfo,
-      [id]: {
-        ...tierInfo[id],
-        name: name,
+    const newTiers = {
+      ...tiers,
+      names: {
+        ...tiers.names,
+        [id]: name,
       },
     };
 
-    setTierInfo(newTierInfo);
+    setTiers(newTiers);
   }
 
   function handleNewItemSubmit(imageUrl) {
@@ -36,12 +38,11 @@ export function SortableTierList(props) {
       return;
     }
 
-    if (items.find((item) => item.id === imageUrl) !== undefined) {
+    if (items.find((item) => item.image === imageUrl) !== undefined) {
       return;
     }
 
     const newItem = {
-      id: imageUrl,
       name: "",
       image: imageUrl,
     };
@@ -49,7 +50,10 @@ export function SortableTierList(props) {
 
     const newTiers = {
       ...tiers,
-      ["t0"]: [...tiers["t0"], imageUrl],
+      itemPlacement: {
+        ...tiers.itemPlacement,
+        ["t0"]: [imageUrl, ...tiers.itemPlacement["t0"]],
+      },
     };
     setTiers(newTiers);
   }
@@ -57,37 +61,41 @@ export function SortableTierList(props) {
   function handleAddTierClick() {
     const newId = `t${tierIdIncrement}`;
     const newTiers = {
-      ...tiers,
-      [newId]: [],
+      itemPlacement: {
+        ...tiers.itemPlacement,
+        [newId]: [],
+      },
+      names: {
+        ...tiers.names,
+        [newId]: "New tier",
+      },
+      order: [...tiers.order, newId],
     };
     setTiers(newTiers);
-
-    const newTierInfo = {
-      ...tierInfo,
-      [newId]: {
-        id: newId,
-        name: "",
-      },
-    };
-    setTierInfo(newTierInfo);
 
     setTierIdIncrement(tierIdIncrement + 1);
   }
 
   function handleTierRemove(id) {
     // Keep at least 1 tier (plus 1 - the unassigned tier)
-    if (Object.keys(tiers).length <= 2) {
+    if (tiers.order.length <= 2) {
       return;
     }
 
-    const itemsInTier = tiers[id];
+    const itemsInTier = tiers.itemPlacement[id];
 
-    const newTiers = {};
-    const keys = Object.keys(tiers).filter((key) => key !== id);
-    for (const k of keys) {
-      newTiers[k] = tiers[k];
-    }
-    newTiers["t0"] = [...tiers["t0"], ...itemsInTier];
+    const newTiers = {
+      ...tiers,
+      itemPlacement: {
+        ...tiers.itemPlacement,
+        ["t0"]: [...tiers.itemPlacement["t0"], ...itemsInTier],
+      },
+      order: tiers.order.filter((tierId) => id !== tierId),
+    };
+
+    delete newTiers.itemPlacement[id];
+    delete newTiers.names[id];
+
     setTiers(newTiers);
   }
 
@@ -96,11 +104,17 @@ export function SortableTierList(props) {
   }
 
   function handleItemRemove(id) {
-    setItems(items.filter((item) => item.id !== id));
-    setTiers({
+    setItems(items.filter((item) => item.image !== id));
+
+    const newTiers = {
       ...tiers,
-      ["t0"]: tiers["t0"].filter((itemId) => itemId !== id),
-    });
+      itemPlacement: {
+        ...tiers.itemPlacement,
+        ["t0"]: tiers.itemPlacement["t0"].filter((itemId) => itemId !== id),
+      },
+    };
+
+    setTiers(newTiers);
   }
 
   function handleShareClick() {
@@ -110,20 +124,25 @@ export function SortableTierList(props) {
   return (
     <DragDropProvider
       onDragOver={(event) => {
-        setTiers((tiers) => move(tiers, event));
+        setTiers((tiers) => {
+          return {
+            ...tiers,
+            itemPlacement: move(tiers.itemPlacement, event),
+          };
+        })
       }}
     >
       <div className="tier-list">
         <div className="named-tiers">
-          {assigned.map(([tierId, tier]) => {
-            const assignedItems = tier.map((itemId) => {
-              return items.find((item) => item.id === itemId);
+          {assigned.map((tierId) => {
+            const assignedItems = tiers.itemPlacement[tierId].map((itemId) => {
+              return items.find((item) => item.image === itemId);
             });
-            return tierId !== "t0" ? (
+            return (
               <TierContainer
                 key={tierId}
                 id={tierId}
-                name={tierInfo[tierId].name}
+                name={tiers.names[tierId]}
                 items={assignedItems}
                 nameChanged={(name) => {
                   onNameChanged(tierId, name);
@@ -132,7 +151,7 @@ export function SortableTierList(props) {
                   handleTierRemove(tierId);
                 }}
               />
-            ) : null;
+            );
           })}
           <div className="add-tier-button-container">
             <button
@@ -149,7 +168,7 @@ export function SortableTierList(props) {
             <div className="unassigned-tier-wrapper">
               <TierContainer
                 id={"t0"}
-                name={initialTierInfo["t0"].name}
+                name={tiers.names["t0"]}
                 items={unassignedItems}
                 unassigned
                 removeMode={removeMode}
@@ -176,22 +195,4 @@ export function SortableTierList(props) {
       </div>
     </DragDropProvider>
   );
-}
-
-function makeTierListMaps(tierList) {
-  const tierLists = tierList.reduce((acc, cur) => {
-    return {
-      ...acc,
-      [cur.id]: cur.items,
-    };
-  }, {});
-
-  const tierInfo = tierList.reduce((acc, cur) => {
-    return {
-      ...acc,
-      [cur.id]: { id: cur.id, name: cur.name },
-    };
-  }, {});
-
-  return [tierLists, tierInfo];
 }
