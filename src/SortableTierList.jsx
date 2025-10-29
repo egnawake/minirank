@@ -3,6 +3,8 @@ import { DragDropProvider } from "@dnd-kit/react";
 import { move } from "@dnd-kit/helpers";
 import { TierContainer } from "./TierContainer";
 import { NewItemDialog } from "./NewItemDialog";
+import { ShareDialog } from "./ShareDialog";
+import { ImportDialog } from "./ImportDialog";
 import "./TierList.css";
 
 export function SortableTierList(props) {
@@ -117,8 +119,10 @@ export function SortableTierList(props) {
     setTiers(newTiers);
   }
 
-  function handleShareClick() {
-    console.log("Not implemented yet");
+  function handleImport(json) {
+    const data = JSON.parse(json);
+    setItems(data.items);
+    setTiers(data.tiers);
   }
 
   return (
@@ -185,9 +189,8 @@ export function SortableTierList(props) {
                 >
                   {!removeMode ? "Remove mode" : "End remove mode"}
                 </button>
-                <button type="button" onClick={handleShareClick}>
-                  Share
-                </button>
+                <ImportDialog onImport={handleImport} />
+                <ShareDialog tierListName="tier_list" tiers={tiers} items={items} />
               </div>
             </div>
           </div>
