@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { Icon } from "./Icon";
 
 export function ImportDialog({ onImport }) {
   const dialogRef = useRef(null);
@@ -24,7 +25,9 @@ export function ImportDialog({ onImport }) {
 
   return (
     <>
-      <button onClick={handleOpenClick}>Import</button>
+      <button onClick={handleOpenClick}>
+        <Icon icon="upload" />
+      </button>
 
       <dialog ref={dialogRef}>
         <form method="dialog" onSubmit={handleSubmit}>

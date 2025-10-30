@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import "typicons.font/src/font/typicons.css";
 import "./App.css";
 import { SortableTierList } from "./SortableTierList";
 

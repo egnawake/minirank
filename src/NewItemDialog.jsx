@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { Icon } from "./Icon";
 
 export function NewItemDialog({ onConfirm }) {
   const dialogRef = useRef(null);
@@ -20,7 +21,9 @@ export function NewItemDialog({ onConfirm }) {
 
   return (
     <>
-      <button onClick={handleOpenClick}>Add</button>
+      <button onClick={handleOpenClick}>
+        <Icon icon="plus" />
+      </button>
 
       <dialog ref={dialogRef}>
         <form method="dialog" onSubmit={handleSubmit}>

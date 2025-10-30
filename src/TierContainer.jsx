@@ -1,6 +1,7 @@
 import { useDroppable } from "@dnd-kit/react";
 import { CollisionPriority } from "@dnd-kit/abstract";
 import { TierItem } from "./TierItem";
+import { Icon } from "./Icon";
 
 export function TierContainer({
   id,
@@ -33,7 +34,7 @@ export function TierContainer({
         <div className="tier-title">
           <input type="text" value={name} onChange={onNameChange} />
           <button type="button" onClick={handleRemoveClick}>
-            Remove
+            <Icon icon="delete" />
           </button>
         </div>
       ) : null}

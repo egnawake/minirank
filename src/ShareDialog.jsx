@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { Icon } from "./Icon";
 
 export function ShareDialog({ tierListName, tiers, items }) {
   const dialogRef = useRef(null);
@@ -22,7 +23,9 @@ export function ShareDialog({ tierListName, tiers, items }) {
 
   return (
     <>
-      <button onClick={handleOpenClick}>Share</button>
+      <button onClick={handleOpenClick}>
+        <Icon icon="export" />
+      </button>
 
       <dialog ref={dialogRef}>
         <form method="dialog">
