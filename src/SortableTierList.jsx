@@ -37,7 +37,7 @@ export function SortableTierList(props) {
     setTiers(newTiers);
   }
 
-  function handleNewItemSubmit(imageUrl) {
+  function handleNewItemSubmit(name, imageUrl) {
     if (imageUrl === "") {
       return;
     }
@@ -47,7 +47,7 @@ export function SortableTierList(props) {
     }
 
     const newItem = {
-      name: "",
+      name,
       image: imageUrl,
     };
     setItems([...items, newItem]);

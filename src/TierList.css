@@ -6,6 +6,10 @@ input {
   font-size: 1rem;
 }
 
+input[type="file"] {
+  font-size: 0.8rem;
+}
+
 input:focus {
   outline: none;
   border-bottom-color: #909090;
@@ -53,6 +57,10 @@ dialog::backdrop {
 
 .dialog-actions * {
   flex: 1;
+}
+
+.form-field {
+  margin-block-end: 10px;
 }
 
 label {

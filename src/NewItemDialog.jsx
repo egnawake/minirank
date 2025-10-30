@@ -14,9 +14,12 @@ export function NewItemDialog({ onConfirm }) {
 
   function handleSubmit(e) {
     const data = new FormData(e.target);
+    const name = data.get("name");
     const url = data.get("imageurl");
+
     e.target.reset();
-    onConfirm(url);
+
+    onConfirm(name, url);
   }
 
   return (
@@ -29,8 +32,14 @@ export function NewItemDialog({ onConfirm }) {
         <form method="dialog" onSubmit={handleSubmit}>
           <div className="dialog-title">New item</div>
           <div className="dialog-content">
-            <label htmlFor="imageurl">Image URL</label>
-            <input type="text" name="imageurl" id="imageurl" />
+            <div className="form-field">
+              <label htmlFor="name">Name</label>
+              <input type="text" name="name" id="name" />
+            </div>
+            <div className="form-field">
+              <label htmlFor="imageurl">Image URL</label>
+              <input type="text" name="imageurl" id="imageurl" />
+            </div>
           </div>
           <div className="dialog-actions">
             <button>Add</button>
