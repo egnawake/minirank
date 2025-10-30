@@ -10,7 +10,7 @@ input[type="file"] {
   font-size: 0.8rem;
 }
 
-input:focus {
+input:focus-visible {
   outline: none;
   border-bottom-color: #909090;
 }
@@ -24,6 +24,16 @@ button {
   border: none;
   border-radius: 6px;
   cursor: pointer;
+}
+
+button:focus-visible {
+  outline: 2px dashed white;
+  outline-offset: -2px;
+}
+
+.tier-item:focus-visible {
+  outline: 2px dashed white;
+  outline-offset: -2px;
 }
 
 .tier-list {
