@@ -43,14 +43,14 @@ const items = [
 
 const initialTiers = {
   itemPlacement: {
-    "t0": items.map((item) => item.image),
-    "t1": [],
-    "t2": [],
+    t0: items.map((item) => item.image),
+    t1: [],
+    t2: [],
   },
   names: {
-    "t0": "(unassigned)",
-    "t1": "S",
-    "t2": "A",
+    t0: "(unassigned)",
+    t1: "S",
+    t2: "A",
   },
   order: ["t0", "t1", "t2"],
 };

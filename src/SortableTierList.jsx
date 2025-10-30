@@ -12,7 +12,9 @@ export function SortableTierList(props) {
   const [items, setItems] = useState(props.items);
 
   // TODO: make tierIdIncrement a ref
-  const [tierIdIncrement, setTierIdIncrement] = useState(props.tiers.order.length);
+  const [tierIdIncrement, setTierIdIncrement] = useState(
+    props.tiers.order.length,
+  );
 
   const [removeMode, setRemoveMode] = useState(false);
 
@@ -133,7 +135,7 @@ export function SortableTierList(props) {
             ...tiers,
             itemPlacement: move(tiers.itemPlacement, event),
           };
-        })
+        });
       }}
     >
       <div className="tier-list">
@@ -170,6 +172,7 @@ export function SortableTierList(props) {
         <div className="bottom-bar">
           <div className="bottom-bar-limiter">
             <div className="unassigned-tier-wrapper">
+              <NewItemDialog onConfirm={handleNewItemSubmit} />
               <TierContainer
                 id={"t0"}
                 name={tiers.names["t0"]}
@@ -181,16 +184,15 @@ export function SortableTierList(props) {
             </div>
             <div className="actions">
               <div className="row">
-                <NewItemDialog onConfirm={handleNewItemSubmit} />
-                <button
-                  type="button"
-                  onClick={handleRemoveItemsClick}
-                  className="add-item-button"
-                >
+                <button type="button" onClick={handleRemoveItemsClick}>
                   {!removeMode ? "Remove mode" : "End remove mode"}
                 </button>
                 <ImportDialog onImport={handleImport} />
-                <ShareDialog tierListName="tier_list" tiers={tiers} items={items} />
+                <ShareDialog
+                  tierListName="tier_list"
+                  tiers={tiers}
+                  items={items}
+                />
               </div>
             </div>
           </div>

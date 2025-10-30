@@ -31,7 +31,9 @@ export function ShareDialog({ tierListName, tiers, items }) {
         <form method="dialog">
           <div className="dialog-title">Share</div>
           <div className="dialog-content">
-            <a href={href} download={`${tierListName}.json`}>Download</a>
+            <a href={href} download={`${tierListName}.json`}>
+              Download
+            </a>
           </div>
           <div className="dialog-actions">
             <button type="button" onClick={handleCancelClick}>

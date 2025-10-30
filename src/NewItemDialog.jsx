@@ -21,7 +21,7 @@ export function NewItemDialog({ onConfirm }) {
 
   return (
     <>
-      <button onClick={handleOpenClick}>
+      <button onClick={handleOpenClick} className="add-item-button">
         <Icon icon="plus" />
       </button>
 
