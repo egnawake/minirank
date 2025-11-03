@@ -56,20 +56,6 @@ const initialTiers = {
 };
 
 function App() {
-  useEffect(() => {
-    const url = new URL(document.location.href);
-
-    const base64 = atob(url.pathname.replace("/", ""));
-
-    let json = null;
-    try {
-      json = JSON.parse(base64);
-    } catch (e) {
-      console.log("Invalid JSON");
-    }
-
-    console.log("Data:", json);
-  }, []);
   return <SortableTierList items={items} tiers={initialTiers} />;
 }
 
