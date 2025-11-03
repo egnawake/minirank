@@ -9,13 +9,17 @@ export function TierItem({
   removeMode,
   onRemove,
 }) {
-  const { ref } = useSortable({
+  const { ref, isDragging } = useSortable({
     id,
     index,
     type: "tier-item",
     accept: "tier-item",
     group,
   });
+
+  const draggingStyle = {
+    opacity: "60%",
+  };
 
   function handleItemClick() {
     if (removeMode) {
@@ -31,6 +35,7 @@ export function TierItem({
       width={50}
       height={50}
       className="tier-item"
+      style={isDragging ? draggingStyle : {}}
       onClick={handleItemClick}
     />
   );
