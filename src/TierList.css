@@ -169,3 +169,9 @@ label {
   height: 50px;
   margin: 4px;
 }
+
+.hold-hint {
+  padding-block: 8px;
+  color: #777777;
+  text-align: center;
+}

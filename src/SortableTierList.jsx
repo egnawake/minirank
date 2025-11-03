@@ -171,6 +171,7 @@ export function SortableTierList(props) {
         </div>
         <div className="bottom-bar">
           <div className="bottom-bar-limiter">
+            <div className="hold-hint">Hold and drag</div>
             <div className="unassigned-tier-wrapper">
               <NewItemDialog onConfirm={handleNewItemSubmit} />
               <TierContainer
