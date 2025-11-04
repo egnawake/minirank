@@ -1,7 +1,8 @@
 import { useRef } from "react";
 import { Icon } from "./Icon";
+import { TrashBin } from "./TrashBin";
 
-export function NewItemDialog({ onConfirm }) {
+export function NewItemDialog({ isDragHappening, onConfirm }) {
   const dialogRef = useRef(null);
 
   function handleOpenClick() {
@@ -24,9 +25,13 @@ export function NewItemDialog({ onConfirm }) {
 
   return (
     <>
-      <button onClick={handleOpenClick} className="add-item-button">
-        <Icon icon="plus" />
-      </button>
+      {isDragHappening ? (
+        <TrashBin />
+      ) : (
+        <button onClick={handleOpenClick} className="add-item-button">
+          <Icon icon="plus" />
+        </button>
+      )}
 
       <dialog ref={dialogRef}>
         <form method="dialog" onSubmit={handleSubmit}>

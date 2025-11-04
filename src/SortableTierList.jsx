@@ -10,6 +10,7 @@ import "./TierList.css";
 export function SortableTierList(props) {
   const [tiers, setTiers] = useState(props.tiers);
   const [items, setItems] = useState(props.items);
+  const [isDragHappening, setIsDragHappening] = useState(false);
 
   // TODO: make tierIdIncrement a ref
   const [tierIdIncrement, setTierIdIncrement] = useState(
@@ -110,11 +111,17 @@ export function SortableTierList(props) {
   function handleItemRemove(id) {
     setItems(items.filter((item) => item.image !== id));
 
+    const itemTierId = tiers.order.find(
+      (tierId) => tiers.itemPlacement[tierId].indexOf(id) > -1,
+    );
+
     const newTiers = {
       ...tiers,
       itemPlacement: {
         ...tiers.itemPlacement,
-        ["t0"]: tiers.itemPlacement["t0"].filter((itemId) => itemId !== id),
+        [itemTierId]: tiers.itemPlacement[itemTierId].filter(
+          (itemId) => itemId !== id,
+        ),
       },
     };
 
@@ -129,6 +136,9 @@ export function SortableTierList(props) {
 
   return (
     <DragDropProvider
+      onDragStart={(event) => {
+        setIsDragHappening(true);
+      }}
       onDragOver={(event) => {
         setTiers((tiers) => {
           return {
@@ -136,6 +146,13 @@ export function SortableTierList(props) {
             itemPlacement: move(tiers.itemPlacement, event),
           };
         });
+      }}
+      onDragEnd={(event) => {
+        const { source, target } = event.operation;
+        setIsDragHappening(false);
+        if (target.id === "trash") {
+          handleItemRemove(source.id);
+        }
       }}
     >
       <div className="tier-list">
@@ -173,7 +190,10 @@ export function SortableTierList(props) {
           <div className="bottom-bar-limiter">
             <div className="hold-hint">Hold and drag</div>
             <div className="unassigned-tier-wrapper">
-              <NewItemDialog onConfirm={handleNewItemSubmit} />
+              <NewItemDialog
+                isDragHappening={isDragHappening}
+                onConfirm={handleNewItemSubmit}
+              />
               <TierContainer
                 id={"t0"}
                 name={tiers.names["t0"]}
@@ -185,9 +205,6 @@ export function SortableTierList(props) {
             </div>
             <div className="actions">
               <div className="row">
-                <button type="button" onClick={handleRemoveItemsClick}>
-                  {!removeMode ? "Remove mode" : "End remove mode"}
-                </button>
                 <ImportDialog onImport={handleImport} />
                 <ShareDialog
                   tierListName="tier_list"

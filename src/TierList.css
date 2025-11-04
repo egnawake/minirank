@@ -175,3 +175,19 @@ label {
   color: #777777;
   text-align: center;
 }
+
+.trash-bin {
+  width: 50px;
+  height: 50px;
+  margin: 4px;
+  background: #443030;
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background 100ms ease-out;
+}
+
+.trash-bin.drop-target {
+  background: #c64343;
+}
