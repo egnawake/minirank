@@ -7,6 +7,7 @@ input {
   background: #101010;
   padding: 6px;
   border-radius: 4px;
+  color: inherit;
   font-size: 1rem;
 }
 
@@ -27,6 +28,7 @@ button {
   background: #303030;
   border: none;
   border-radius: 6px;
+  color: inherit;
   cursor: pointer;
 }
 
