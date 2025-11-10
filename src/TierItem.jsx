@@ -32,8 +32,6 @@ export function TierItem({
       ref={ref}
       src={image}
       alt={name}
-      width={50}
-      height={50}
       className="tier-item"
       style={isDragging ? draggingStyle : {}}
       onClick={handleItemClick}

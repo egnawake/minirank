@@ -1,3 +1,7 @@
+:root {
+  --item-size: 60px;
+}
+
 input {
   border: 2px solid #101010;
   background: #101010;
@@ -102,8 +106,8 @@ label {
 }
 
 .tier-container {
-  height: 58px;
-  padding: 4px;
+  height: calc(var(--item-size) + 2 * 4px);
+  padding-inline: 4px;
   display: flex;
   gap: 4px;
   align-items: center;
@@ -113,6 +117,8 @@ label {
 }
 
 .tier-item {
+  width: var(--item-size);
+  height: var(--item-size);
   border-radius: 4px;
   cursor: pointer;
   object-fit: cover;
@@ -141,6 +147,7 @@ label {
 }
 .bottom-bar .actions .row > button {
   border-radius: 0;
+  height: 45px;
 }
 .bottom-bar button:first-child {
   border-inline-start: none;
@@ -166,8 +173,8 @@ label {
 }
 
 .add-item-button {
-  width: 50px;
-  height: 50px;
+  width: var(--item-size);
+  height: var(--item-size);
   margin: 4px;
 }
 
@@ -178,8 +185,8 @@ label {
 }
 
 .trash-bin {
-  width: 50px;
-  height: 50px;
+  width: var(--item-size);
+  height: var(--item-size);
   margin: 4px;
   background: #443030;
   border-radius: 6px;
