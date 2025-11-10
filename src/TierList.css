@@ -89,6 +89,8 @@ label {
 
 .tier {
   margin: 10px;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 .tier-title {
@@ -98,11 +100,15 @@ label {
 .tier-title input {
   flex: 1 0 auto;
   font-size: 1.1rem;
-  border-radius: 6px 0 0 0;
+  border-radius: 0;
 }
 
 .tier-title button {
-  border-radius: 0 6px 0 0;
+  border-radius: 0;
+}
+
+.tier-title button.drag-handle {
+  background: #101010;
 }
 
 .tier-container {

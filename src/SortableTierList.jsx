@@ -14,7 +14,7 @@ export function SortableTierList(props) {
 
   // TODO: make tierIdIncrement a ref
   const [tierIdIncrement, setTierIdIncrement] = useState(
-    props.tiers.order.length,
+    Object.keys(props.tiers.itemPlacement).length,
   );
 
   const [removeMode, setRemoveMode] = useState(false);
@@ -111,7 +111,7 @@ export function SortableTierList(props) {
   function handleItemRemove(id) {
     setItems(items.filter((item) => item.image !== id));
 
-    const itemTierId = tiers.order.find(
+    const itemTierId = Object.keys(tiers.itemPlacement).find(
       (tierId) => tiers.itemPlacement[tierId].indexOf(id) > -1,
     );
 
@@ -148,16 +148,25 @@ export function SortableTierList(props) {
         });
       }}
       onDragEnd={(event) => {
-        const { source, target } = event.operation;
         setIsDragHappening(false);
-        if (target.id === "trash") {
+
+        const { source, target } = event.operation;
+
+        if (target === null) return;
+
+        if (source.type === "tier-item" && target.id === "trash") {
           handleItemRemove(source.id);
+        } else if (source.type === "tier-container" && target.type === "tier-container") {
+          setTiers((tiers) => ({
+            ...tiers,
+            order: move(tiers.order, event),
+          }));
         }
       }}
     >
       <div className="tier-list">
         <div className="named-tiers">
-          {assigned.map((tierId) => {
+          {assigned.map((tierId, index) => {
             const assignedItems = tiers.itemPlacement[tierId].map((itemId) => {
               return items.find((item) => item.image === itemId);
             });
@@ -165,6 +174,7 @@ export function SortableTierList(props) {
               <TierContainer
                 key={tierId}
                 id={tierId}
+                index={index}
                 name={tiers.names[tierId]}
                 items={assignedItems}
                 nameChanged={(name) => {

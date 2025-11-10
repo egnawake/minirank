@@ -52,7 +52,7 @@ const initialTiers = {
     t1: "S",
     t2: "A",
   },
-  order: ["t0", "t1", "t2"],
+  order: ["t1", "t2"],
 };
 
 function App() {

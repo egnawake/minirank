@@ -1,4 +1,4 @@
-import { useDroppable } from "@dnd-kit/react";
+import { useSortable } from "@dnd-kit/react/sortable";
 import { CollisionPriority } from "@dnd-kit/abstract";
 import { TierItem } from "./TierItem";
 import { Icon } from "./Icon";
@@ -6,6 +6,7 @@ import { Icon } from "./Icon";
 export function TierContainer({
   id,
   name,
+  index,
   items,
   unassigned,
   removeMode,
@@ -13,10 +14,11 @@ export function TierContainer({
   onRemove,
   onItemRemove,
 }) {
-  const { ref } = useDroppable({
+  const { ref, handleRef } = useSortable({
     id,
+    index,
     type: "tier-container",
-    accept: "tier-item",
+    accept: ["tier-item", "tier-container"],
     collisionPriority: CollisionPriority.Low,
   });
 
@@ -29,9 +31,12 @@ export function TierContainer({
   }
 
   return (
-    <div className="tier">
+    <div ref={ref} className="tier">
       {!unassigned ? (
         <div className="tier-title">
+          <button type="button" ref={handleRef} className="drag-handle">
+            <Icon icon="arrow-unsorted" />
+          </button>
           <input type="text" value={name} onChange={onNameChange} />
           <button type="button" onClick={handleRemoveClick}>
             <Icon icon="delete" />
@@ -39,7 +44,6 @@ export function TierContainer({
         </div>
       ) : null}
       <div
-        ref={ref}
         className={"tier-container" + (unassigned ? " unassigned" : "")}
       >
         {items.map((item, index) => (
