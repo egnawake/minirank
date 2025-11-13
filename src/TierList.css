@@ -1,5 +1,6 @@
 :root {
   --item-size: 60px;
+  --text-color: #fafafa;
 }
 
 input {
@@ -7,7 +8,7 @@ input {
   background: #101010;
   padding: 6px;
   border-radius: 4px;
-  color: inherit;
+  color: var(--text-color);
   font-size: 1rem;
 }
 
@@ -28,7 +29,7 @@ button {
   background: #303030;
   border: none;
   border-radius: 6px;
-  color: inherit;
+  color: var(--text-color);
   cursor: pointer;
 }
 
@@ -81,6 +82,7 @@ dialog::backdrop {
 
 label {
   display: block;
+  color: var(--text-color);
   font-size: 13px;
   margin-block-end: 4px;
 }
