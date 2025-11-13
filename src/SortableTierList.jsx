@@ -5,6 +5,7 @@ import { TierContainer } from "./TierContainer";
 import { NewItemDialog } from "./NewItemDialog";
 import { ShareDialog } from "./ShareDialog";
 import { ImportDialog } from "./ImportDialog";
+import { Tooltip } from "./Tooltip";
 import "./TierList.css";
 
 export function SortableTierList(props) {
@@ -215,6 +216,7 @@ export function SortableTierList(props) {
             </div>
           </div>
         </div>
+        <Tooltip />
       </div>
     </DragDropProvider>
   );
