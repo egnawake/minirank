@@ -115,7 +115,7 @@ label {
   display: flex;
   gap: 4px;
   align-items: center;
-  overflow: scroll;
+  overflow-x: auto;
   background: #161616;
   border-radius: 0 0 6px 6px;
 }
