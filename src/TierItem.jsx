@@ -8,6 +8,7 @@ export function TierItem({
   image,
   removeMode,
   onRemove,
+  onView,
 }) {
   const { ref, isDragging } = useSortable({
     id,
@@ -24,6 +25,8 @@ export function TierItem({
   function handleItemClick() {
     if (removeMode) {
       onRemove(id);
+    } else {
+      onView(id);
     }
   }
 

@@ -1,16 +1,21 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { DragDropProvider } from "@dnd-kit/react";
 import { move } from "@dnd-kit/helpers";
 import { TierContainer } from "./TierContainer";
 import { NewItemDialog } from "./NewItemDialog";
 import { ShareDialog } from "./ShareDialog";
 import { ImportDialog } from "./ImportDialog";
+import { ItemInfoDialog } from "./ItemInfoDialog";
 import "./TierList.css";
 
 export function SortableTierList(props) {
   const [tiers, setTiers] = useState(props.tiers);
   const [items, setItems] = useState(props.items);
   const [isDragHappening, setIsDragHappening] = useState(false);
+  const [selectedItemInfo, setSelectedItemInfo] = useState({
+    name: "",
+    imageUrl: "",
+  });
 
   // TODO: make tierIdIncrement a ref
   const [tierIdIncrement, setTierIdIncrement] = useState(
@@ -18,6 +23,8 @@ export function SortableTierList(props) {
   );
 
   const [removeMode, setRemoveMode] = useState(false);
+
+  const itemInfoDialogRef = useRef(null);
 
   const unassigned = tiers.itemPlacement["t0"];
   const unassignedItems = unassigned.map((itemId) => {
@@ -128,6 +135,15 @@ export function SortableTierList(props) {
     setTiers(newTiers);
   }
 
+  function handleItemView(id) {
+    const item = items.find((it) => it.image === id);
+    setSelectedItemInfo({
+      name: item.name,
+      imageUrl: item.image,
+    });
+    itemInfoDialogRef.current.showModal();
+  }
+
   function handleImport(json) {
     const data = JSON.parse(json);
     setItems(data.items);
@@ -173,6 +189,7 @@ export function SortableTierList(props) {
                 onRemove={() => {
                   handleTierRemove(tierId);
                 }}
+                onItemView={handleItemView}
               />
             );
           })}
@@ -201,6 +218,7 @@ export function SortableTierList(props) {
                 unassigned
                 removeMode={removeMode}
                 onItemRemove={handleItemRemove}
+                onItemView={handleItemView}
               />
             </div>
             <div className="actions">
@@ -216,6 +234,11 @@ export function SortableTierList(props) {
           </div>
         </div>
       </div>
+      <ItemInfoDialog
+        ref={itemInfoDialogRef}
+        name={selectedItemInfo.name}
+        imageUrl={selectedItemInfo.imageUrl}
+      />
     </DragDropProvider>
   );
 }

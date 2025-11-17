@@ -52,10 +52,26 @@ dialog {
   border: none;
   border-radius: 8px;
   background: #202020;
+  min-width: min(85vw, 280px);
+  max-width: 600px;
 }
 
 dialog::backdrop {
   background-color: #00000090;
+}
+
+dialog input {
+  width: 100%;
+}
+
+.item-info-dialog {
+  text-align: center;
+  padding: 0;
+}
+
+.item-info-box {
+  display: flex;
+  flex-direction: column;
 }
 
 .dialog-title {
@@ -202,4 +218,15 @@ label {
 
 .trash-bin.drop-target {
   background: #c64343;
+}
+
+.item-info-image {
+  object-fit: cover;
+  width: 100%;
+  max-width: 300px;
+}
+
+.item-info-name {
+  padding-block: 10px;
+  font-size: 0.9rem;
 }
